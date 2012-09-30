@@ -1,0 +1,3 @@
+[submodule "mrtsqr"]
+	path = mrtsqr
+	url = https://github.com/arbenson/mrtsqr.git
