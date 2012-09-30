@@ -1,0 +1,64 @@
+#!/bin/bash
+
+On all nodes (namenode and datanodes), we should install the following packages:
+
+# install numpy
+wget "http://sourceforge.net/projects/numpy/files/NumPy/1.6.1/numpy-1.6.1.tar.gz/download"
+tar xfz numpy-1.6.1.tar.gz
+cd numpy-1.6.1
+python setup.py install
+cd ..
+
+# install ctypedbytes
+git clone https://github.com/klbostee/ctypedbytes.git
+cd ctypedbytes
+python setup.py install
+cd ..
+
+# install netcdf
+wget "http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-4.1.3.tar.gz" 
+tar xfz netcdf-4.1.3.tar.gz 
+cd netcdf-4.1.3 
+./configure --with-pic --disable-dap --disable-netcdf-4 
+make 
+make install 
+make check
+cd ..
+
+# install pynetcdf
+wget "http://downloads.sourceforge.net/project/pylab/PyNetCDF/0.7/pynetcdf-0.7.tar.gz"
+tar xfz pynetcdf-0.7.tar.gz 
+cd pynetcdf-0.7 
+python setup.py install 
+cd ..
+
+# install hyy-python-hadoop
+git clone https://github.com/hyysun/Hadoop.git
+cd Hadoop
+cd pyhton-hadoop
+python setup.py install
+cd ..
+cd ..
+
+If you have some problems about netcdf, try:
+1. Place usr-local.conf in /etc/ld.so.conf.d on all nodes.
+(see icme-hadoop1 /etc/ld.so.conf.d/ for the template)
+2. Run ldconfig -v as root on all nodes.
+
+We need to install the following packages on the namenode:
+
+# install mrjob
+git clone https://github.com/dgleich/mrjob.git
+cd mrjob
+python setup.py install
+cd ..
+
+# install dumbo
+git clone https://github.com/klbostee/dumbo
+cd dumbo
+python setup.py install
+cd ..
+
+Some notes about running commands:
+1. The HDFS uri should be as the following format: 
+hdfs://namenodehost/user/username...
